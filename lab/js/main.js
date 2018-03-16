@@ -25,6 +25,11 @@ https://raw.githubusercontent.com/CPLN-692-401/datasets/master/geojson/philadelp
 
 You should now have GeoJSON data projected onto your map!
 
+===================== */
+
+
+/* =====================
+
 ## Task 2 - our first choropleth map
 
 Style each garbage collection area with a different color depending on what day
@@ -45,6 +50,10 @@ For our myStyle function, we want a different fillColor to be returned depending
 on the day of the week. If you need help, review http://leafletjs.com/examples/geojson.html for
 working examples of this function.
 
+
+===================== */
+
+/* =====================
 ## Task 3
 
 You might have noticed that two of the features we are mapping have empty
@@ -67,6 +76,10 @@ Since it always returns true, it will add each feature to the map. Modify the
 code so it only adds features to the map if they have a collection day (not an
 empty string).
 
+
+===================== */
+
+/* =====================
 ## Task 4
 
 Let's make something happen when a user clicks on a feature. Change the "Day of
@@ -86,9 +99,12 @@ layer.on('click', function (e) {
   ...
 })
 
-That part sets up a click event on each feature. Any code inside that second
+That part sets up a click feature on each feature. Any code inside that second
 block of code will happen each time a feature is clicked.
 
+===================== */
+
+/* =====================
 ## Task 5
 
 Create a legend for the map. You do not need to use Javascript. You can use HTML
@@ -96,7 +112,9 @@ and CSS to create legend boxes and give each a different color. Put a label next
 to each box. Position the legend on top of the map (hint: you can use absolute
 positioning, which is the technique used to position the sidebar and map on this
 page).
+===================== */
 
+/* =====================
 ## Task 6 (Stretch goal)
 
 Let's associate the leaflet ID (we can use this to look up a leaflet layer) with
@@ -104,12 +122,17 @@ our HTML element. Try to use the `getLayerId` method of `L.FeatureGroup` and
 `L.LayerGroup` (on myFeatureGroup) below.
 With it, add the Leaflet ID to the information provided on the left.
 
+===================== */
+
+/* =====================
 ## Task 7 (Stretch Goal)
 
 Use fitBounds (http://leafletjs.com/reference.html#map-fitbounds) to zoom in and
 center the map on one particular feature. To find the bounds for a feature, use
-event.target.getBounds() inside of the layer.on function.
+feature.target.getBounds() inside of the layer.on function.
+===================== */
 
+/* =====================
 ## Task 8 (Stretch Goal)
 
 Add a "Close" or "X" button to the top right of your sidebar. When when the
@@ -117,6 +140,9 @@ button is clicked, call a function closeResults that performs the opposite
 processes as showResults, returning the user to the original state of the
 application.
 
+===================== */
+
+/* =====================
 ## Task 9 (Stretch Goal)
 
 Use Underscore to perform analysis on this GeoJSON data: which day of
@@ -125,11 +151,29 @@ of the application to report this information.
 
 ===================== */
 
-var dataset = ""
+
+/* var dataset = $.ajax("https://raw.githubusercontent.com/CPLN-692-401/datasets/master/geojson/philadelphia-garbage-collection-boundaries.geojson");*/
+
+var dataset = "https://raw.githubusercontent.com/CPLN-692-401/datasets/master/geojson/philadelphia-garbage-collection-boundaries.geojson";
+
 var featureGroup;
 
 var myStyle = function(feature) {
-  return {};
+  if (feature.properties.COLLDAY=="MON"){
+    return  {fillColor: 'red'};
+  }
+  if(feature.properties.COLLDAY=="TUE"){
+    return {fillColor:'green'};
+  }
+  if(feature.properties.COLLDAY=="WED"){
+    return{fillColor:'pink'};
+  }
+  if(feature.properties.COLLDAY=="THU"){
+    return{fillColor:'orange'};
+  }
+  if(feature.properties.COLLDAY=="FRI"){
+    return{fillColor:'black'};
+  }
 };
 
 var showResults = function() {
@@ -148,6 +192,25 @@ var showResults = function() {
 
 var eachFeatureFunction = function(layer) {
   layer.on('click', function (event) {
+    switch(layer.feature.properties.COLLDAY){
+      case 'MON':
+        $('.day-of-week').text('Monday');
+        console.log("hello");
+        break;
+      case 'TUE':
+        $('.day-of-week').text('Tuesday');
+        break;
+      case 'WED':
+        $('.day-of-week').text('Wednesday');
+        break;
+      case 'THU':
+        $('.day-of-week').text('Thursday');
+        break;
+      case 'FRI':
+        $('.day-of-week').text('Friday');
+        break;
+    }
+
     /* =====================
     The following code will run every time a layer on the map is clicked.
     Check out layer.feature to see some useful data about the layer that
@@ -159,6 +222,7 @@ var eachFeatureFunction = function(layer) {
 };
 
 var myFilter = function(feature) {
+  if(feature.properties.COLLDAY!=" ")
   return true;
 };
 

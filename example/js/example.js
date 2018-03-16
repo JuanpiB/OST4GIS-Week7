@@ -13,7 +13,7 @@ var mapOpts = {
   center: [0, 0],
   zoom: 2
 };
-var map = L.map('map', mapOpts);
+var map = L.map('map', mapOpts);// there is an object with the ID of map in the html
 
 // Another options object
 var tileOpts = {
@@ -26,7 +26,7 @@ var tileOpts = {
 var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', tileOpts).addTo(map);
 
 // Ajax to grab json
-var getData = $.ajax('https://raw.githubusercontent.com/CPLN-692-401/datasets/master/json/world-country-capitals.json')
+var getData = $.ajax('https://raw.githubusercontent.com/CPLN-692-401/datasets/master/json/world-country-capitals.json');
 
 /* =====================
   Parse and store data for later use
@@ -114,7 +114,7 @@ var filterAndPlot = function() {
  * Note the naming scheme - the 'onEventOccurrence' naming scheme is very common for functions
  * such as this.
  */
-var onStringFilterChange = function(e) {
+var onStringFilterChange = function(e) { //given some event e give the target value of the event e a correct value
   stringFilter = e.target.value.toLowerCase();
   filterAndPlot();
 };
@@ -143,5 +143,5 @@ var bindEvents = function() {
 $(document).ready(function() {
   getData
     .then(parseData)
-    .then(bindEvents);
+    .then(bindEvents); //bind events knows how to use that data that was parsed
 });
